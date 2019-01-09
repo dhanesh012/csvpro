@@ -36,13 +36,15 @@ class CsvManage(object):
     if fileitem.filename:
       fn = os.path.basename(fileitem.filename)
       open(fn, 'wb').write(fileitem.file.read())
+
       message = 'The file "' + fn + '" was uploaded successfully'
-      csv_file = fileitem.file.readlines()
+      csv_file = open(fn).readlines()
       f = csv.reader(csv_file)
       csv_data = []
       for row in f:
         if not row:continue
         csv_data.append((row[0],row[1],row[2]))
+        
       self.mycursor.executemany(self.sql, csv_data)
       self.mydb.commit()
     else:
