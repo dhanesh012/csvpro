@@ -1,0 +1,33 @@
+<html>
+  <head>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    
+  </head>
+  <body>
+    <h1>CSV uploader</h1>
+    <ul>
+      <div class="ul"></div>
+    </ul>
+    <form action="cgi-bin/csvpro.py" method="post" enctype="multipart/form-data">
+        <input type="file" name="file" id="file">
+        <input type="submit" name="submit">
+      </form>
+
+      <form action="cgi-bin/csvpro.py">
+        <select id="selectBox" name="selectBox">
+            
+          
+        <input type="submit">
+      </form>
+  </body>
+  <script>
+        $.get("/cgi-bin/csvpro.py?action=getdata", function(data) {
+          for (i = 0; i < data.split(",").length; i++) {
+            $(".ul").append("<li>" + data.split(",")[i] + "</li>");
+ 
+            $("#selectBox").append('<option value="'+data.split(",")[i] +'">'+data.split(",")[i] +'</option>');
+            //$(".op-delete").append('<option value="'+ data.split(",")[i]+'">'+ data.split(",")[i]+'</option>')
+          }
+        });
+      </script>
+</html>
